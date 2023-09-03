@@ -1,16 +1,50 @@
-->  reset password for ES
-* elasticsearch-reset-password --username elastic -i
+# match all the documents
+GET products/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
 
+# term queries don't analyze and used for exact match i.e. case-sensitive
+GET products/_search
+{
+  "query": {
+   "term": {
+     "tags.keyword": {
+       "value": "Alcohol"
+     }
+   }
+  }
+}
 
-->  Configure Kibana to use this cluster:
-* Run Kibana and click the configuration link in the terminal when Kibana starts.
-* Copy the following enrollment token and paste it into Kibana in your browser (valid for the next 30 minutes):
-  eyJ2ZXIiOiI4LjMuMiIsImFkciI6WyIxNzIuMTcuMjQwLjE6OTIwMCJdLCJmZ3IiOiI4ZjBjYTE1MzZjMGFiMzA3Y2EzNTFmOWJiZmIwNzRmNTk4ZmVlMTc2YzUyOGJlM2IzNjY4OWJmNDEzOGY3NzY0Iiwia2V5IjoiS18wYU9JSUJUMktLNGFWY1Y2a1o6cmx6NDdMMGtScWFRTWdQeTNEanZfUSJ9
+# Matching documents with a value of true for the is_active field
+GET /products/_search
+{
+  "query": {
+    "term": {
+      "is_active": true
+    }
+  }
+}
 
-->  Configure other nodes to join this cluster:
-* On this node:
-  - Create an enrollment token with `bin/elasticsearch-create-enrollment-token -s node`.
-  - Uncomment the transport.host setting at the end of config/elasticsearch.yml.
-  - Restart Elasticsearch.
-* On other nodes:
-  - Start Elasticsearch with `bin/elasticsearch --enrollment-token <token>`, using the enrollment token that you generated.
+GET /products/_search
+{
+  "query": {
+    "term": {
+      "is_active": {
+        "value": true
+      }
+    }
+  }
+}
+
+# Searching for multiple values via terms
+GET /products/_search
+{
+  "query": {
+    "terms": {
+      "tags.keyword": [ "Soup", "Cake" ]
+    }
+  }
+}
