@@ -1,0 +1,19 @@
+# Matching phrases
+# The order of terms matters
+GET /products/_search
+{
+  "query": {
+    "match_phrase": {
+      "name": "wine-Maipo"
+    }
+  }
+}
+
+GET /products/_search
+{
+  "query": {
+    "match_phrase": {
+      "name": "Maipo wine"
+    }
+  }
+}
