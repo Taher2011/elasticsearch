@@ -1,0 +1,29 @@
+GET /products/_search
+{
+  "query": {
+    "match": {
+      "name": "pasta"
+    }
+  }
+}
+
+GET /products/_search
+{
+  "query": {
+    "match": {
+      "name": "Chicken"
+    }
+  }
+}
+
+GET /products/_search
+{
+  "query": {
+    "match": {
+      "name": {
+        "query": "pasta chicken",
+        "operator": "and"
+      }
+    }
+  }
+}
