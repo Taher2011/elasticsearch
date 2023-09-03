@@ -1,0 +1,30 @@
+# Matching documents with non-null values
+GET /products/_search
+{
+  "query": {
+    "exists": {
+      "field": "tags"
+    }
+  }
+}
+
+above query is equivalent to "select * from products where tags is not null"
+
+
+# Matching documents with null values
+GET /products/_search
+{
+  "query": {
+    "bool": {
+      "must_not": [
+        {
+          "exists": {
+            "field": "tags"
+          }
+        }
+      ]
+    }
+  }
+}
+
+above query is equivalent to "select * from products where tags is null"
